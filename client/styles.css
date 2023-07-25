@@ -1,0 +1,5 @@
+.login-page {
+  display: flex;
+  justify-content: space-around;
+  background: rgb(116, 135, 116);
+}
