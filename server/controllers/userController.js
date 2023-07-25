@@ -2,7 +2,7 @@ const db = require('../models/model.js');
 //login, sign up, log out, 
 const userController = {};
 
-userController.verifyuser = (req, res, next) => {
+userController.verifyUser = (req, res, next) => {
   // get username and password and query database to verify that username matches hashed password
 }
 
