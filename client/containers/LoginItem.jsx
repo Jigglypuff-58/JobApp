@@ -17,14 +17,46 @@ import {
   onOpen,
   onClose
 } from '@chakra-ui/react';
-import { CheckIcon } from '@chakra-ui/icons';
+// import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // Hooks for user input for sign up field
+  const usernameRefSignUp = useRef()
+  const passwordRefSignUp = useRef()
+  const emailRefSignUp = useRef()
+
+  // Hooks for user input for sign in field
+  const usernameRefSignIn = useRef();
+  const passwordRefSignIn = useRef();
+
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+  
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const username = usernameRefSignUp.current.value
+    const password = passwordRefSignUp.current.value
+    const email = emailRefSignUp.current.value
+    console.log('FROM SIGNUP: ', username, password, email)
+    // fetch('localhost:3000/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({userName: username, password, email})
+    // })
+    // .then(signUpResponse => {
 
+    // })
+  }
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const username = usernameRefSignIn.current.value;
+    const password = passwordRefSignIn.current.value;
+    console.log('FROM SIGN IN: ', username, password)
+  }
   return (
     <div className='login-page'>
       <div className='hero'>
@@ -34,10 +66,10 @@ const Login = () => {
       <div className='login-component'>
         <FormControl id='input-wrapper'>
           <FormLabel>Username</FormLabel>
-          <Input type='username' />
-          <FormLabel>Username</FormLabel>
-          <Input type='password' />
-          <Button leftIcon={<CheckIcon />}> Sign In</Button>
+          <Input ref={usernameRefSignIn} type='username' />
+          <FormLabel>Password</FormLabel>
+          <Input ref={passwordRefSignIn} type='password' />
+          <Button onClick={handleSignIn}> Sign In</Button>
           <Button onClick={onOpen}> Sign Up</Button>
         </FormControl>
         <Modal
@@ -52,21 +84,21 @@ const Login = () => {
             <ModalCloseButton />
             <ModalBody pb={6}>
             <FormControl>
-                <FormLabel>Username</FormLabel>
-                <Input ref={initialRef} placeholder='Username' />
+                <FormLabel >Username</FormLabel>
+                <Input ref={usernameRefSignUp} placeholder='Username' />
               </FormControl>
               <FormControl>
                 <FormLabel>Email Address</FormLabel>
-                <Input ref={initialRef} placeholder='Email Address' />
+                <Input ref={emailRefSignUp} placeholder='Email Address' />
               </FormControl>
-              <FormControl mt={4}>
+              <FormControl>
                 <FormLabel>Password</FormLabel>
-                <Input placeholder='Password' />
+                <Input ref={passwordRefSignUp} placeholder='Password' />
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='blue' mr={3}>
+              <Button colorScheme='blue' mr={3} onClick={handleSignUp}>
                 Sign Up
               </Button>
               <Button onClick={onClose}>Cancel</Button>
