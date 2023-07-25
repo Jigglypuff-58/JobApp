@@ -3,3 +3,18 @@
   justify-content: space-around;
   background: rgb(116, 135, 116);
 }
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 45pt;
+  background: rgb(30, 219, 30);
+}
+.home {
+  padding-left: 2%;
+}
+
+.post {
+  padding-right: 2%;
+}

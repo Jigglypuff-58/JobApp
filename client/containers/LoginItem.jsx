@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef } from 'react'
+import { useRef } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -15,7 +15,7 @@ import {
   useDisclosure,
   isOpen,
   onOpen,
-  onClose
+  onClose,
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
@@ -51,7 +51,7 @@ const Login = () => {
             <ModalHeader>Create your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-            <FormControl>
+              <FormControl>
                 <FormLabel>Username</FormLabel>
                 <Input ref={initialRef} placeholder='Username' />
               </FormControl>
