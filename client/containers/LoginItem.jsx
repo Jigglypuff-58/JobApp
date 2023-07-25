@@ -1,27 +1,29 @@
-import { useRef } from 'react';
+import React from 'react';
+import { useRef } from 'react'
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
+  // Modal,
+  // ModalOverlay,
+  // ModalContent,
+  // ModalHeader,
+  // ModalFooter,
+  // ModalBody,
+  // ModalCloseButton,
+  // useDisclosure,
+  // isOpen,
+  // onOpen,
+  // onClose
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // // const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
+  // // const initialRef = useRef(null);
+  // // const finalRef = useRef(null);
 
   return (
     <div className='login-page'>
@@ -36,9 +38,9 @@ const Login = () => {
           <FormLabel>Password</FormLabel>
           <Input type='password' />
           <Button leftIcon={<CheckIcon />}> Sign In</Button>
-          <Button onClick={onOpen}> Sign Up</Button>
+          <Button> Sign Up</Button>
         </FormControl>
-        <Modal
+        {/* <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
           isOpen={isOpen}
@@ -67,7 +69,7 @@ const Login = () => {
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </ModalContent>
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   );
