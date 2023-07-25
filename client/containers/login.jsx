@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -6,12 +6,23 @@ import {
   FormHelperText,
   Input,
   Button,
-  CheckIcon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
-
 import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+
   return (
     <div className='login-page'>
       <div className='hero'>
@@ -24,9 +35,39 @@ const Login = () => {
           <Input type='email' />
           <FormLabel>Password</FormLabel>
           <Input type='password' />
-          <Button> Submit</Button>
-          <Button> Sign Up</Button>
+          <Button leftIcon={<CheckIcon />}> Sign In</Button>
+          <Button onClick={onOpen}> Sign Up</Button>
         </FormControl>
+        <Modal
+          initialFocusRef={initialRef}
+          finalFocusRef={finalRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create your account</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Email Address</FormLabel>
+                <Input ref={initialRef} placeholder='Email Address' />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Password</FormLabel>
+                <Input placeholder='Password' />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme='blue' mr={3}>
+                Sign Up
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </div>
     </div>
   );
