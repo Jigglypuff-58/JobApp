@@ -1,4 +1,4 @@
-const db = require('.Models/model.js');
+const db = require('../models/model.js');
 //create post, check post
 const postController = {};
 
