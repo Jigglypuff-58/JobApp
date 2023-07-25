@@ -3,6 +3,8 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
+const userController = require('./controllers/userController');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -13,6 +15,11 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
+
+app.post('/signup', userController.createUser, (req, res) => {
+  return res.status(200).json(res.locals.result);
+});
+
 
 //route error handler
 app.use((req, res) =>
