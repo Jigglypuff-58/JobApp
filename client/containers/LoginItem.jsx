@@ -5,25 +5,25 @@ import {
   FormLabel,
   Input,
   Button,
-  // Modal,
-  // ModalOverlay,
-  // ModalContent,
-  // ModalHeader,
-  // ModalFooter,
-  // ModalBody,
-  // ModalCloseButton,
-  // useDisclosure,
-  // isOpen,
-  // onOpen,
-  // onClose
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  isOpen,
+  onOpen,
+  onClose
 } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
-  // // const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // // const initialRef = useRef(null);
-  // // const finalRef = useRef(null);
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
 
   return (
     <div className='login-page'>
@@ -33,14 +33,14 @@ const Login = () => {
       </div>
       <div className='login-component'>
         <FormControl id='input-wrapper'>
-          <FormLabel>Email address</FormLabel>
-          <Input type='email' />
-          <FormLabel>Password</FormLabel>
+          <FormLabel>Username</FormLabel>
+          <Input type='username' />
+          <FormLabel>Username</FormLabel>
           <Input type='password' />
           <Button leftIcon={<CheckIcon />}> Sign In</Button>
-          <Button> Sign Up</Button>
+          <Button onClick={onOpen}> Sign Up</Button>
         </FormControl>
-        {/* <Modal
+        <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
           isOpen={isOpen}
@@ -51,11 +51,14 @@ const Login = () => {
             <ModalHeader>Create your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
+            <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input ref={initialRef} placeholder='Username' />
+              </FormControl>
               <FormControl>
                 <FormLabel>Email Address</FormLabel>
                 <Input ref={initialRef} placeholder='Email Address' />
               </FormControl>
-
               <FormControl mt={4}>
                 <FormLabel>Password</FormLabel>
                 <Input placeholder='Password' />
@@ -69,7 +72,7 @@ const Login = () => {
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </ModalContent>
-        </Modal> */}
+        </Modal>
       </div>
     </div>
   );
