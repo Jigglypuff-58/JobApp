@@ -18,3 +18,24 @@
   background-color: orange;
   height: 50vh
 }
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 45pt;
+  background: rgb(30, 219, 30);
+}
+.home-button {
+  padding-left: 2%;
+}
+
+.post-button {
+  padding-right: 2%;
+}
+
+.post-container {
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+}
