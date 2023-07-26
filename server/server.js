@@ -1,15 +1,18 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cookieParser = require('cookie-parser');
 const PORT = 3000;
 
 const userController = require('./controllers/userController');
 const postController = require('./controllers/postController');
 const searchController = require('./controllers/searchController');
+const cookieController = require('./controllers/cookieController');
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
 // statically serve the dist and client folder
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../client')));
@@ -18,7 +21,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.post('/signup', userController.createUser, (req, res) => {
+app.post('/signup', userController.createUser, cookieController.setCookie, (req, res) => {
   return res.status(200).json(res.locals.result);
 });
 
@@ -35,6 +38,9 @@ app.post('/search', searchController.search, (req, res) => {
 })
 
 
+app.post('/login', userController.verifyUser, cookieController.setCookie, (req, res) => {
+  return res.status(200).json(res.locals.result); 
+});
 
 //route error handler
 app.use((req, res) =>
