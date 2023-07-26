@@ -40,7 +40,8 @@ const Feed = () => {
   const salaryRef = useRef('');
 
   const [languages, setLanguages] = useState(new Set());
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
+
   const handleRefresh = async (e) => {
     try {
       const response = await fetch('/posts');
@@ -48,8 +49,26 @@ const Feed = () => {
         throw new Error('Failed to fetch posts');
       }
       const data = await response.json();
-      setPost(data);
-      return <Post></Post>;
+      console.log(data);
+      const postsArr = [];
+      for (let i = 0; i < data.length; i++) {
+        const curVal = data[i];
+        postsArr.push(
+          <Post
+            company_name={curVal.company_name}
+            job_title={curVal.job_title}
+            lang_id={curVal.lang_id}
+            lang_name={curVal.lang_name}
+            languages={curVal.languages}
+            message={curVal.message}
+            post_id={curVal.post_id}
+            salary={curVal.salary}
+            url={curVal.url}
+            user_id={curVal.user_id}
+          />
+        );
+      }
+      setPosts(postsArr);
     } catch (error) {
       console.log('Error fetching posts: ', error);
     }
@@ -196,9 +215,7 @@ const Feed = () => {
           </Modal>
         </div>
       </div>
-      <div className='post-container'>
-        <Post />
-      </div>
+      <div className='post-container'>{posts}</div>
     </div>
   );
 };
