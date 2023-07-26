@@ -132,7 +132,7 @@ const Login = () => {
   return (
     <div className='login-page'>
       <div className='hero'>
-        <h1>Jobby</h1>
+        <h1>Ununemployed.</h1>
         <p>Cool design or picture here</p>
       </div>
       <div className='login-component'>

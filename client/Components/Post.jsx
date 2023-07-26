@@ -36,7 +36,7 @@ const Post = ({
       </ListItem>
     );
   }
-
+  
   return (
     <div className='post'>
       <Card maxW='sm' background='#1b1523' color='#fff'>
@@ -46,7 +46,7 @@ const Post = ({
             <Heading size='md'>{company_name}</Heading>
             <Text>{message}</Text>
             <Text color='green.200' fontSize='xl'>
-              {salary}
+              ${salary.toLocaleString("en-US")}
             </Text>
             <Heading size='sm'>Languages</Heading>
             <List spacing={3}>{listOfLanguages}</List>

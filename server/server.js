@@ -42,6 +42,7 @@ app.post('/login', userController.verifyUser, cookieController.setCookie, (req, 
   return res.status(200).json({userid: res.locals.userid, result: res.locals.result}); 
 });
 
+
 //route error handler
 app.use((req, res) =>
   res.status(404).send('Error, not the page you are looking for')
