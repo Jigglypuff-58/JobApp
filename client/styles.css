@@ -48,16 +48,18 @@
 }
 
 .hero {
-  background-color: orange;
+  /* background-color: rgb(248, 180, 53); */
   height: 80vh;
   width: 35vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .hero h1 {
+  color: rgb(36, 36, 36);
   font-size: 100px;
-  letter-spacing: -1.2px;
+  letter-spacing: -1.6px;
   font-family: 'Work Sans', sans-serif;
 }
 
@@ -66,10 +68,17 @@
   justify-content: space-between;
   align-items: center;
   height: 45pt;
-  background: rgb(30, 219, 30);
+  /* background: rgb(30, 219, 30); */
 }
 .home-button {
   padding-left: 2%;
+}
+
+.title{
+  display:flex;
+  justify-content: center;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 58px;
 }
 
 .post-button {
@@ -77,9 +86,24 @@
 }
 
 .post-container {
-  background-color: lightblue;
+  /* background-color: lightblue; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
+}
+
+.post{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.chakra-card, .css-1y1kths{
+  width: 75%;
+
 }

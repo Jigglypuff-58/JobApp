@@ -5,16 +5,10 @@ import Feed from './Containers/FeedPage.jsx';
 
 const App = () => {
   return (
-    <>
-      <nav>
-        <Link to='/'>Login</Link>
-        <Link to='/feed'>Feed</Link>
-      </nav>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/feed' element={<Feed />} />
       </Routes>
-    </>
   );
 };
 

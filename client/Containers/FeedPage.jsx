@@ -56,7 +56,7 @@ const Feed = () => {
       const data = await response.json();
       console.log(data);
       const postsArr = [];
-      for (let i = 0; i < data.length; i++) {
+      for (let i = data.length - 1; i >= 0; i--) {
         const curVal = data[i];
         postsArr.push(
           <Post
@@ -112,8 +112,9 @@ const Feed = () => {
     });
     const data = await response.json();
 
-    console.log('data is:', data);
+    handleRefresh();
 
+    console.log('data is:', data);
     onClose();
   };
 
@@ -137,7 +138,7 @@ const Feed = () => {
     <div>
       <div className='nav'>
         <div className='home-button'>
-          <Button onClick={handleRefresh} leftIcon={<RepeatIcon />}></Button>
+          <Button onClick={handleRefresh} leftIcon={<RepeatIcon/>}>Refresh</Button>
         </div>
         <div className='post-button'>
           <Button onClick={onOpen} leftIcon={<EditIcon />}>
@@ -209,7 +210,10 @@ const Feed = () => {
           </Modal>
         </div>
       </div>
-      <div className='post-container'>{posts}</div>
+      <div className = 'JobApps'>
+        <h1 className='title'> Job Postings</h1>
+        <div className='post-container'>{posts}</div>
+      </div>
     </div>
   );
 };
