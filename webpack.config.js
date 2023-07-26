@@ -37,7 +37,7 @@ module.exports = {
         ],
     },
     devServer: {
-        host: 'localhost',
+        host: '127.0.0.1',
         static: {
             directory: path.join(__dirname, 'client'),
             publicPath: '/'

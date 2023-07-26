@@ -11,7 +11,7 @@ userController.createUser = async (req, res, next) => {
   // query database for the username, if it's taken, respond to front end saying its taken
   // if its available, hash their password and store it in database, along with other info in the req body
   const { userName, password, email} = req.body;
-  const query = `SELECT * FROM users WHERE users.username = '${userName}'`;
+  const query = `SELECT * FROM user_table WHERE user_table.username = '${userName}'`;
 
   const pgResponse = await db.query(query)
     .then(data => {

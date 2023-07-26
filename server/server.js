@@ -4,6 +4,8 @@ const app = express();
 const PORT = 3000;
 
 const userController = require('./controllers/userController');
+const postController = require('./controllers/postController');
+const searchController = require('./controllers/searchController');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +21,19 @@ app.get('/', (req, res) => {
 app.post('/signup', userController.createUser, (req, res) => {
   return res.status(200).json(res.locals.result);
 });
+
+app.get('/posts', postController.getPost, (req, res) => {
+  return res.status(200).json(res.locals.allPosts);
+});
+
+app.post('/posts', postController.createPost, (req, res) => {
+  return res.status(200).json(res.locals.post);
+});
+
+app.post('/search', searchController.search, (req, res) => {
+  return res.status(200).json(res.locals.result);
+})
+
 
 
 //route error handler
