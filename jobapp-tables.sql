@@ -30,3 +30,9 @@ CREATE TABLE languages (
   PRIMARY KEY (lang_id),
   lang_name text NOT NULL
 );
+
+CREATE TABLE cookie_table (
+  cookie text NOT NULL,
+  user_id int,
+  FOREIGN KEY (user_id) REFERENCES user_table(user_id)
+);
