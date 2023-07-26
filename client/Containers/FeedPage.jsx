@@ -55,14 +55,19 @@ const Feed = () => {
     // console.log('message:', message);
     // console.log('company_name:', company_name);
     // console.log('user_id:', user_id);
-    console.log('languages:', languages);
+    // console.log('languages:', languages);
+
+    // Convert Set to Array to match what backend is expecting for the data
+    const languagesArray = [...languages];
+
+    console.log('languagesArray is:', languagesArray);
 
     // const response = await fetch('/posts', {
     //   method: 'POST',
     //   headers: {
     //     "Content-Type": "application/json"
     //   },
-    //   body: JSON.stringify({ job_title, salary, url, message, company_name, user_id, languages })
+    //   body: JSON.stringify({ job_title, salary, url, message, company_name, user_id, languages: languageArray })
     // });
   };
 
