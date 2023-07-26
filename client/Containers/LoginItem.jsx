@@ -21,65 +21,63 @@ import {
   useDisclosure,
   isOpen,
   onOpen,
-  onClose
+  onClose,
 } from '@chakra-ui/react';
 // import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
-  // React Router hook 
+  // React Router hook
   const navigate = useNavigate();
   // chakraUI hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   // Hooks for user input for sign up field
-  const usernameRefSignUp = useRef('')
-  const passwordRefSignUp = useRef('')
-  const emailRefSignUp = useRef('')
+  const usernameRefSignUp = useRef('');
+  const passwordRefSignUp = useRef('');
+  const emailRefSignUp = useRef('');
 
   // Hooks for user input for sign in field
   const usernameRefSignIn = useRef('');
   const passwordRefSignIn = useRef('');
 
-
-  
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  // let canNavigate = false;
   const handleSignUp = (e) => {
     e.preventDefault();
-    const username = usernameRefSignUp.current.value
-    const password = passwordRefSignUp.current.value
-    const email = emailRefSignUp.current.value
+    const username = usernameRefSignUp.current.value;
+    const password = passwordRefSignUp.current.value;
+    const email = emailRefSignUp.current.value;
     fetch('/signup', {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({userName: username, password, email})
+      body: JSON.stringify({ userName: username, password, email }),
     })
-    .then(data => data.json())
-    .then(signUpResponse => {
-      if (signUpResponse === 'successful') {
-        toast({
-          title: 'Account created',
-          description: 'You have successfully created an account! Please sign in.',
-          position: 'top',
-          status: 'success',
-          duration: 3000,
-          isClosable: true
-        })
-      onClose();
-      } else {
-        toast({
-          title: 'Account username unavailable.',
-          description: 'Please enter a new username.',
-          position: 'top',
-          duration: 3000,
-          isClosable: true
-        })
-      }
-    })
-  }
+      .then((data) => data.json())
+      .then((signUpResponse) => {
+        if (signUpResponse === 'successful') {
+          toast({
+            title: 'Account created',
+            description:
+              'You have successfully created an account! Please sign in.',
+            position: 'top',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+          });
+          onClose();
+        } else {
+          toast({
+            title: 'Account username unavailable.',
+            description: 'Please enter a new username.',
+            position: 'top',
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      });
+  };
   const handleSignIn = (e) => {
     e.preventDefault();
     const username = usernameRefSignIn.current.value;
@@ -87,50 +85,50 @@ const Login = () => {
     if (username === '') {
       toast({
         title: 'Username required',
-          position: 'top',
-          duration: 3000,
-          isClosable: true,
-      })
-      return
+        position: 'top',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
     } else if (password === '') {
       toast({
         title: 'Password required',
-          position: 'top',
-          duration: 3000,
-          isClosable: true,
-      })
-      return
+        position: 'top',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
     } else {
       fetch('/login', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userName: username, password})
+        body: JSON.stringify({ userName: username, password }),
       })
-      .then(data => data.json())
-      .then(async signInResponse => {
-        if (signInResponse.result === 'verified') {
-          await toast({
-            title: 'Sign in successful!',
-            position: 'top',
-            status: 'success',
-            duration: 3000,
-            isClosable: true
-          })
-          navigate('/feed', {state: {userID: signInResponse.userid}});
-        } else {
-          toast({
-            title: 'Sign in failed',
-            description: 'Username or password incorrect. Please try again.',
-            position: 'top',
-            duration: 3000,
-            isClosable: true,
-          })
-        }
-      })
+        .then((data) => data.json())
+        .then(async (signInResponse) => {
+          if (signInResponse.result === 'verified') {
+            await toast({
+              title: 'Sign in successful!',
+              position: 'top',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
+            navigate('/feed', { state: { userID: signInResponse.userid } });
+          } else {
+            toast({
+              title: 'Sign in failed',
+              description: 'Username or password incorrect. Please try again.',
+              position: 'top',
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        });
     }
-  }
+  };
   return (
     <div className='login-page'>
       <div className='hero'>
@@ -138,30 +136,30 @@ const Login = () => {
         <p>Cool design or picture here</p>
       </div>
       <div className='login-component'>
-        <FormControl className="login-area" isRequired={true}>
+        <FormControl className='login-area' isRequired={true}>
           <div>
             <FormLabel>Username</FormLabel>
-            <Input ref={usernameRefSignIn} type='username'/>
+            <Input ref={usernameRefSignIn} type='username' />
           </div>
           <div>
             <FormLabel>Password</FormLabel>
-            <Input ref={passwordRefSignIn} type='password'/>
+            <Input ref={passwordRefSignIn} type='password' />
           </div>
-          <div className="button-container">
+          <div className='button-container'>
             <Button onClick={handleSignIn}> Sign In</Button>
-            <div className="buttons">
-              <div className="bar"></div>
+            <div className='buttons'>
+              <div className='bar'></div>
               <p>or</p>
-              <div className="bar"></div>
+              <div className='bar'></div>
             </div>
-            
+
             <Button onClick={onOpen}> Sign Up</Button>
           </div>
         </FormControl>
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
-          isOpen={isOpen} 
+          isOpen={isOpen}
           onClose={onClose}
         >
           <ModalOverlay />
@@ -169,8 +167,8 @@ const Login = () => {
             <ModalHeader>Create your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-            <FormControl isRequired>
-                <FormLabel >Username</FormLabel>
+              <FormControl isRequired>
+                <FormLabel>Username</FormLabel>
                 <Input ref={usernameRefSignUp} placeholder='Username' />
               </FormControl>
               <FormControl isRequired>
@@ -179,7 +177,11 @@ const Login = () => {
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input ref={passwordRefSignUp} placeholder='Password' />
+                <Input
+                  ref={passwordRefSignUp}
+                  placeholder='Password'
+                  type='password'
+                />
               </FormControl>
             </ModalBody>
 
