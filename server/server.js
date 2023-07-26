@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const PORT = 3000;
 
 const userController = require('./controllers/userController');
+const postController = require('./controllers/postController');
+const searchController = require('./controllers/searchController');
 const cookieController = require('./controllers/cookieController');
 
 
@@ -22,6 +24,19 @@ app.get('/', (req, res) => {
 app.post('/signup', userController.createUser, cookieController.setCookie, (req, res) => {
   return res.status(200).json(res.locals.result);
 });
+
+app.get('/posts', postController.getPost, (req, res) => {
+  return res.status(200).json(res.locals.allPosts);
+});
+
+app.post('/posts', postController.createPost, (req, res) => {
+  return res.status(200).json(res.locals.post);
+});
+
+app.post('/search', searchController.search, (req, res) => {
+  return res.status(200).json(res.locals.result);
+})
+
 
 app.post('/login', userController.verifyUser, cookieController.setCookie, (req, res) => {
   return res.status(200).json(res.locals.result); 
