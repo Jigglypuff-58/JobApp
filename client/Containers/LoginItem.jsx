@@ -60,76 +60,108 @@ const Login = () => {
     .then(data => data.json())
     .then(signUpResponse => {
       if (signUpResponse === 'successful') {
-        // toast({
-        //   title: 'Account created',
-        //   description: 'You have successfully created an account! Please sign in.',
-        //   position: 'top',
-        //   status: 'success',
-        //   duration: 3000,
-        //   isClosable: true
-        // })
+        toast({
+          title: 'Account created',
+          description: 'You have successfully created an account! Please sign in.',
+          position: 'top',
+          status: 'success',
+          duration: 3000,
+          isClosable: true
+        })
       } else {
-        console.log('bad sign up', signUpResponse)
-        
-        // toast({
-        //   title: 'Account username unavailable.',
-        //   description: 'Please enter a new username.',
-        //   position: 'top',
-        //   status: 'fail',
-        //   duration: 3000,
-        //   isClosable: true
-        // })
+        toast({
+          title: 'Account username unavailable.',
+          description: 'Please enter a new username.',
+          position: 'top',
+          duration: 3000,
+          isClosable: true
+        })
       }
     })
   }
   const handleSignIn = (e) => {
     e.preventDefault();
-    console.log('in handle sign in')
     const username = usernameRefSignIn.current.value;
     const password = passwordRefSignIn.current.value;
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({userName: username, password})
-    })
-    .then(data => data.json())
-    .then(signInResponse => {
-      if (signInResponse === 'verified') {
-        navigate('/feed')
-      } else {
-        // toast({
-        //   title: 'Sign in failed',
-        //   description: 'Username or password incorrect. Please try again.',
-        //   position: 'top',
-        //   status: 'fail',
-        //   duration: 3000,
-        //   isClosable: true,
-        // })
-        console.log('signInResponse',signInResponse)
-      }
-    })
+    if (username === '') {
+      toast({
+        title: 'Username required',
+          position: 'top',
+          duration: 3000,
+          isClosable: true,
+      })
+      return
+    } else if (password === '') {
+      toast({
+        title: 'Password required',
+          position: 'top',
+          duration: 3000,
+          isClosable: true,
+      })
+      return
+    } else {
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({userName: username, password})
+      })
+      .then(data => data.json())
+      .then(async signInResponse => {
+        if (signInResponse === 'verified') {
+          await toast({
+            title: 'Sign in successful!',
+            position: 'top',
+            status: 'success',
+            duration: 3000,
+            isClosable: true
+          })
+          navigate('/feed')
+        } else {
+          toast({
+            title: 'Sign in failed',
+            description: 'Username or password incorrect. Please try again.',
+            position: 'top',
+            duration: 3000,
+            isClosable: true,
+          })
+          console.log('signInResponse',signInResponse)
+        }
+      })
+    }
   }
   return (
     <div className='login-page'>
       <div className='hero'>
-        <h1>JobApp</h1>
+        <h1>Jobby</h1>
         <p>Cool design or picture here</p>
       </div>
       <div className='login-component'>
-        <FormControl isRequired={true}>
-          <FormLabel>Username</FormLabel>
-          <Input ref={usernameRefSignIn} type='username'/>
-          <FormLabel>Password</FormLabel>
-          <Input ref={passwordRefSignIn} type='password'/>
-          <Button onClick={handleSignIn}> Sign In</Button>
-          <Button onClick={onOpen}> Sign Up</Button>
+        <FormControl className="login-area" isRequired={true}>
+          <div>
+            <FormLabel>Username</FormLabel>
+            <Input ref={usernameRefSignIn} type='username'/>
+          </div>
+          <div>
+            <FormLabel>Password</FormLabel>
+            <Input ref={passwordRefSignIn} type='password'/>
+          </div>
+          <div className="button-container">
+            <Button onClick={handleSignIn}> Sign In</Button>
+            <div className="buttons">
+              <div className="bar"></div>
+              <p>or</p>
+              <div className="bar"></div>
+            </div>
+            
+            <Button onClick={onOpen}> Sign Up</Button>
+          </div>
         </FormControl>
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
-          isOpen={isOpen}
+          isOpen={isOpen} 
           onClose={onClose}
         >
           <ModalOverlay />
