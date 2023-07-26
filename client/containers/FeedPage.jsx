@@ -57,7 +57,6 @@ const Feed = () => {
               <Input placeholder='URL' />
             </FormControl>
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme='blue' mr={3}>
               Post
