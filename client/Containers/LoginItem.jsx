@@ -1,10 +1,11 @@
 import React from 'react';
-import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   FormControl,
   FormLabel,
+  Box,
   FormErrorMessage,
   FormHelperText,
   Input,
@@ -49,58 +50,64 @@ const Login = () => {
     const username = usernameRefSignUp.current.value
     const password = passwordRefSignUp.current.value
     const email = emailRefSignUp.current.value
-    fetch('localhost:3000/signup', {
+    fetch('/signup', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({userName: username, password, email})
     })
+    .then(data => data.json())
     .then(signUpResponse => {
       if (signUpResponse === 'successful') {
-        toast({
-          title: 'Account created',
-          description: 'You have successfully created an account! Please sign in.',
-          position: 'top',
-          status: 'success',
-          duration: 3000,
-          isClosable: true
-        })
+        // toast({
+        //   title: 'Account created',
+        //   description: 'You have successfully created an account! Please sign in.',
+        //   position: 'top',
+        //   status: 'success',
+        //   duration: 3000,
+        //   isClosable: true
+        // })
       } else {
-        toast({
-          title: 'Account username unavailable.',
-          description: 'Please enter a new username.',
-          position: 'top',
-          status: 'fail',
-          duration: 3000,
-          isClosable: true
-        })
+        console.log('bad sign up', signUpResponse)
+        
+        // toast({
+        //   title: 'Account username unavailable.',
+        //   description: 'Please enter a new username.',
+        //   position: 'top',
+        //   status: 'fail',
+        //   duration: 3000,
+        //   isClosable: true
+        // })
       }
     })
   }
   const handleSignIn = (e) => {
     e.preventDefault();
+    console.log('in handle sign in')
     const username = usernameRefSignIn.current.value;
     const password = passwordRefSignIn.current.value;
-    fetch('localhost:3000/login', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({userName: username, password})
     })
+    .then(data => data.json())
     .then(signInResponse => {
-      if (signInResponse.result === 'verified') {
+      if (signInResponse === 'verified') {
         navigate('/feed')
       } else {
-        toast({
-          title: 'Sign in failed',
-          description: 'Username or password incorrect. Please try again.',
-          position: 'top',
-          status: 'fail',
-          duration: 3000,
-          isClosable: true,
-        })
+        // toast({
+        //   title: 'Sign in failed',
+        //   description: 'Username or password incorrect. Please try again.',
+        //   position: 'top',
+        //   status: 'fail',
+        //   duration: 3000,
+        //   isClosable: true,
+        // })
+        console.log('signInResponse',signInResponse)
       }
     })
   }
@@ -130,22 +137,22 @@ const Login = () => {
             <ModalHeader>Create your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-            <FormControl>
+            <FormControl isRequired>
                 <FormLabel >Username</FormLabel>
                 <Input ref={usernameRefSignUp} placeholder='Username' />
               </FormControl>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Email Address</FormLabel>
                 <Input ref={emailRefSignUp} placeholder='Email Address' />
               </FormControl>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input ref={passwordRefSignUp} placeholder='Password' />
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={handleSignUp}>
+              <Button mr={3} onClick={handleSignUp}>
                 Sign Up
               </Button>
               <Button onClick={onClose}>Cancel</Button>
