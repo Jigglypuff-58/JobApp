@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -44,7 +44,7 @@ const Login = () => {
   
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  
+  // let canNavigate = false;
   const handleSignUp = (e) => {
     e.preventDefault();
     const username = usernameRefSignUp.current.value
@@ -109,7 +109,7 @@ const Login = () => {
       })
       .then(data => data.json())
       .then(async signInResponse => {
-        if (signInResponse === 'verified') {
+        if (signInResponse.result === 'verified') {
           await toast({
             title: 'Sign in successful!',
             position: 'top',
@@ -117,7 +117,7 @@ const Login = () => {
             duration: 3000,
             isClosable: true
           })
-          navigate('/feed')
+          navigate('/feed', {state: {userID: signInResponse.userid}});
         } else {
           toast({
             title: 'Sign in failed',
@@ -126,7 +126,6 @@ const Login = () => {
             duration: 3000,
             isClosable: true,
           })
-          console.log('signInResponse',signInResponse)
         }
       })
     }

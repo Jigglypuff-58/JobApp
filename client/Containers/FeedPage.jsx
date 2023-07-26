@@ -1,7 +1,8 @@
 import React from 'react';
 import { EditIcon, SunIcon } from '@chakra-ui/icons';
 import Post from '../Components/Post';
-import { useRef, useState } from 'react';
+import { useRef, useState,  } from 'react';
+import {useLocation} from 'react-router-dom';
 import Languages from '../Components/Languages.jsx';
 import {
   FormControl,
@@ -31,6 +32,9 @@ import { Checkbox, CheckboxGroup } from '@chakra-ui/react';
 
 
 const Feed = () => {
+  const {state} = useLocation();
+  const {userID} = state;
+  console.log('userid in FEED', userID)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
