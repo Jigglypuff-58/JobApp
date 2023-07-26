@@ -39,7 +39,7 @@ app.post('/search', searchController.search, (req, res) => {
 
 
 app.post('/login', userController.verifyUser, cookieController.setCookie, (req, res) => {
-  return res.status(200).json(res.locals.result); 
+  return res.status(200).json({userid: res.locals.userid, result: res.locals.result}); 
 });
 
 //route error handler
