@@ -3,6 +3,9 @@ const cookieController = {};
 const bcrypt = require('bcrypt');
 
 cookieController.setCookie = async (req, res, next) => {
+  if(res.locals.skip) {
+    return next();
+  }
   const { userName } = req.body;
   bcrypt
     .hash(userName, 10)

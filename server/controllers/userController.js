@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const userController = {};
 
 userController.verifyUser = async (req, res, next) => {
+  console.log('in verifyuser mw')
   // get username and password and query database to verify that username matches hashed password
   const { userName, password } = req.body;
   // do not allow input fields to be empty
@@ -27,12 +28,14 @@ userController.verifyUser = async (req, res, next) => {
             }
             else {
               res.locals.result = 'username or password incorrect';
+              res.locals.skip = true;
               return next();
             }
           })
       }
       else {
         res.locals.result = 'username or password incorrect';
+        res.locals.skip = true;
         return next();
       }
     })
@@ -48,7 +51,7 @@ userController.createUser = async (req, res, next) => {
   // if its available, hash their password and store it in database, along with other info in the req body
   const { userName, password, email } = req.body;
   // do not allow input fields to be empty
-  if (typeof userName != string || typeof password != string) {
+  if (typeof userName != 'string' || typeof password != 'string') {
     return next({
       log: 'User entered empty fields',
       message: {err: 'Input fields cannot be empty'}
