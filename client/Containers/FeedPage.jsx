@@ -39,36 +39,34 @@ const Feed = () => {
   const companyRef = useRef('');
   const messageRef = useRef('');
   const salaryRef = useRef('');
+  const urlRef = useRef('')
 
   const [languages, setLanguages] = useState(new Set());
 
   const handleNewPost = async (e) => {
     e.preventDefault();
     const job_title = titleRef.current.value;
-    const salary = companyRef.current.value;
+    const company_name = companyRef.current.value;
     const message = messageRef.current.value;
-    const company_name = salaryRef.current.value;
+    const salary = salaryRef.current.value;
+    const url = urlRef.current.value
     const user_id = 1;
-
-    // console.log('job_title:', job_title);
-    // console.log('salary:', salary);
-    // console.log('message:', message);
-    // console.log('company_name:', company_name);
-    // console.log('user_id:', user_id);
-    // console.log('languages:', languages);
 
     // Convert Set to Array to match what backend is expecting for the data
     const languagesArray = [...languages];
 
-    console.log('languagesArray is:', languagesArray);
+    const response = await fetch('/posts', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ job_title, salary, url, message, company_name, user_id, languages: languagesArray })
+    });
+    const data = await response.json();
 
-    // const response = await fetch('/posts', {
-    //   method: 'POST',
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({ job_title, salary, url, message, company_name, user_id, languages: languageArray })
-    // });
+    console.log('data is:', data);
+
+    onClose();
   };
 
   const getLanguages = (e) => {
@@ -76,8 +74,8 @@ const Feed = () => {
     
     const value = e.target.value;
     const isChecked = e.target.checked; // --> true or false
-    console.log('isChecked:', isChecked);
-    console.log('getLanguages synthetic event:', e.target.value);
+    // console.log('isChecked:', isChecked);
+    // console.log('getLanguages synthetic event:', e.target.value);
     
     const copy = structuredClone(languages);
 
@@ -127,6 +125,12 @@ const Feed = () => {
               <FormLabel>Salary</FormLabel>
               <Input ref={salaryRef} placeholder='Salary' />
             </FormControl>
+            
+            <FormControl mt={4}>
+              <FormLabel>Link</FormLabel>
+              <Input ref={urlRef} placeholder='Link' />
+            </FormControl>
+            
             <Accordion defaultIndex={[0]} allowMultiple>
               <AccordionItem>
                 <h2>
@@ -138,39 +142,15 @@ const Feed = () => {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  {/* <Checkbox onChange={getLanguages} value='1' size='sm' colorScheme='green'>
-                    JavaScript
-                  </Checkbox>
-                  <Checkbox onChange={getLanguages} value='5' size='sm' colorScheme='green'>
-                    Python
-                  </Checkbox>
-                  <Checkbox onChange={getLanguages} value='10' size='sm' colorScheme='green'>
-                    Go
-                  </Checkbox> */}
                   <Languages languages={languages} getLanguages={getLanguages}/>
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>
-            {/* <Stack spacing={[1, 5]} direction={['column', 'row']}>
-              <FormLabel>Languages</FormLabel>
-              <Checkbox size='sm' colorScheme='green'>
-                JavaScript
-              </Checkbox>
-              <Checkbox size='sm' colorScheme='green' >
-                TypeScript
-              </Checkbox>
-              <Checkbox size='sm' colorScheme='green' >
-                React
-              </Checkbox>
-            </Stack> */}
-            
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={handleNewPost}>Post</Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
-
         </ModalContent>
       </Modal>
       </div>
