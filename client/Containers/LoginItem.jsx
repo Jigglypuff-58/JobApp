@@ -81,38 +81,55 @@ const Login = () => {
   }
   const handleSignIn = (e) => {
     e.preventDefault();
-    console.log('in handle sign in')
     const username = usernameRefSignIn.current.value;
     const password = passwordRefSignIn.current.value;
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({userName: username, password})
-    })
-    .then(data => data.json())
-    .then(async signInResponse => {
-      if (signInResponse === 'verified') {
-        await toast({
-          title: 'Sign in successful!',
-          position: 'top',
-          status: 'success',
-          duration: 3000,
-          isClosable: true
-        })
-        navigate('/feed')
-      } else {
-        toast({
-          title: 'Sign in failed',
-          description: 'Username or password incorrect. Please try again.',
+    if (username === '') {
+      toast({
+        title: 'Username required',
           position: 'top',
           duration: 3000,
           isClosable: true,
-        })
-        console.log('signInResponse',signInResponse)
-      }
-    })
+      })
+      return
+    } else if (password === '') {
+      toast({
+        title: 'Password required',
+          position: 'top',
+          duration: 3000,
+          isClosable: true,
+      })
+      return
+    } else {
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({userName: username, password})
+      })
+      .then(data => data.json())
+      .then(async signInResponse => {
+        if (signInResponse === 'verified') {
+          await toast({
+            title: 'Sign in successful!',
+            position: 'top',
+            status: 'success',
+            duration: 3000,
+            isClosable: true
+          })
+          navigate('/feed')
+        } else {
+          toast({
+            title: 'Sign in failed',
+            description: 'Username or password incorrect. Please try again.',
+            position: 'top',
+            duration: 3000,
+            isClosable: true,
+          })
+          console.log('signInResponse',signInResponse)
+        }
+      })
+    }
   }
   return (
     <div className='login-page'>
