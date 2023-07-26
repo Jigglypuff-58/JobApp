@@ -68,6 +68,7 @@ const Login = () => {
           duration: 3000,
           isClosable: true
         })
+      onClose();
       } else {
         toast({
           title: 'Account username unavailable.',
