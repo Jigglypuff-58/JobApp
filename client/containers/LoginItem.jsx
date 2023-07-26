@@ -1,8 +1,12 @@
 import React from 'react';
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
+  Container,
   FormControl,
   FormLabel,
+  FormErrorMessage,
+  FormHelperText,
   Input,
   Button,
   Modal,
@@ -12,6 +16,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useToast,
   useDisclosure,
   isOpen,
   onOpen,
@@ -20,17 +25,22 @@ import {
 // import { CheckIcon } from '@chakra-ui/icons';
 
 const Login = () => {
+  // React Router hook 
+  const navigate = useNavigate();
+  // chakraUI hooks
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   // Hooks for user input for sign up field
-  const usernameRefSignUp = useRef()
-  const passwordRefSignUp = useRef()
-  const emailRefSignUp = useRef()
+  const usernameRefSignUp = useRef('')
+  const passwordRefSignUp = useRef('')
+  const emailRefSignUp = useRef('')
 
   // Hooks for user input for sign in field
-  const usernameRefSignIn = useRef();
-  const passwordRefSignIn = useRef();
+  const usernameRefSignIn = useRef('');
+  const passwordRefSignIn = useRef('');
 
 
+  
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   
@@ -39,23 +49,60 @@ const Login = () => {
     const username = usernameRefSignUp.current.value
     const password = passwordRefSignUp.current.value
     const email = emailRefSignUp.current.value
-    console.log('FROM SIGNUP: ', username, password, email)
-    // fetch('localhost:3000/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({userName: username, password, email})
-    // })
-    // .then(signUpResponse => {
-
-    // })
+    fetch('localhost:3000/signup', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({userName: username, password, email})
+    })
+    .then(signUpResponse => {
+      if (signUpResponse === 'successful') {
+        toast({
+          title: 'Account created',
+          description: 'You have successfully created an account! Please sign in.',
+          position: 'top',
+          status: 'success',
+          duration: 3000,
+          isClosable: true
+        })
+      } else {
+        toast({
+          title: 'Account username unavailable.',
+          description: 'Please enter a new username.',
+          position: 'top',
+          status: 'fail',
+          duration: 3000,
+          isClosable: true
+        })
+      }
+    })
   }
   const handleSignIn = (e) => {
     e.preventDefault();
     const username = usernameRefSignIn.current.value;
     const password = passwordRefSignIn.current.value;
-    console.log('FROM SIGN IN: ', username, password)
+    fetch('localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({userName: username, password})
+    })
+    .then(signInResponse => {
+      if (signInResponse.result === 'verified') {
+        navigate('/feed')
+      } else {
+        toast({
+          title: 'Sign in failed',
+          description: 'Username or password incorrect. Please try again.',
+          position: 'top',
+          status: 'fail',
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+    })
   }
   return (
     <div className='login-page'>
@@ -64,11 +111,11 @@ const Login = () => {
         <p>Cool design or picture here</p>
       </div>
       <div className='login-component'>
-        <FormControl id='input-wrapper'>
+        <FormControl isRequired={true}>
           <FormLabel>Username</FormLabel>
-          <Input ref={usernameRefSignIn} type='username' />
+          <Input ref={usernameRefSignIn} type='username'/>
           <FormLabel>Password</FormLabel>
-          <Input ref={passwordRefSignIn} type='password' />
+          <Input ref={passwordRefSignIn} type='password'/>
           <Button onClick={handleSignIn}> Sign In</Button>
           <Button onClick={onOpen}> Sign Up</Button>
         </FormControl>

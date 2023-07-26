@@ -1,5 +1,20 @@
 .login-page {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   background: rgb(116, 135, 116);
+  height: 100vh;
+  padding: 100px 200px;
+}
+
+.login-component {
+  background-color: white;
+  height: 500px;
+  padding: 50px;
+
+}
+
+.hero {
+  background-color: orange;
+  height: 50vh
 }
